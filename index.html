@@ -1,0 +1,3129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Banga Fashion Limited</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f6f8;
+  color:#222;
+}
+
+.hidden{
+  display:none!important;
+}
+
+header{
+  background:#17365d;
+  color:white;
+  padding:18px 20px;
+}
+
+header h1{
+  margin:0;
+  font-size:25px;
+}
+
+header p{
+  margin:5px 0 0;
+  opacity:.9;
+}
+
+nav{
+  background:white;
+  border-bottom:1px solid #ddd;
+  padding:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+nav button{
+  border:0;
+  padding:10px 15px;
+  border-radius:6px;
+  background:#e9eef5;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+nav button.active,
+nav button:hover{
+  background:#17365d;
+  color:white;
+}
+
+.container{
+  max-width:1800px;
+  margin:auto;
+  padding:18px;
+}
+
+.card{
+  background:white;
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+h2{
+  margin-top:0;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field label{
+  font-weight:bold;
+  font-size:14px;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-size:14px;
+}
+
+textarea{
+  min-height:80px;
+}
+
+.btn{
+  border:0;
+  background:#17365d;
+  color:white;
+  padding:10px 16px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.btn:hover{
+  opacity:.9;
+}
+
+.btn.secondary{
+  background:#777;
+}
+
+.btn.danger{
+  background:#c62828;
+}
+
+.btn.success{
+  background:#287a38;
+}
+
+.btn.small{
+  padding:6px 9px;
+  font-size:12px;
+  margin:2px;
+}
+
+.form-actions{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.stat{
+  background:white;
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.stat h3{
+  margin:0 0 8px;
+  font-size:14px;
+  color:#666;
+}
+
+.stat strong{
+  font-size:30px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1300px;
+}
+
+th,
+td{
+  border:1px solid #ddd;
+  padding:8px;
+  text-align:left;
+  white-space:nowrap;
+}
+
+th{
+  background:#17365d;
+  color:white;
+  position:sticky;
+  top:0;
+}
+
+tr:nth-child(even){
+  background:#f8f8f8;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:20px;
+  background:#dff3e3;
+  color:#176b27;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.badge.off{
+  background:#eee;
+  color:#777;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+.toolbar input{
+  max-width:500px;
+}
+
+.login-box{
+  max-width:420px;
+  margin:80px auto;
+}
+
+.login-box h2{
+  text-align:center;
+}
+
+.muted{
+  color:#777;
+}
+
+.error{
+  color:#c62828;
+  margin-top:10px;
+}
+
+.success-msg{
+  color:#287a38;
+  margin-top:10px;
+}
+
+.company-title{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.profile-title{
+  background:#17365d;
+  color:white;
+  padding:12px;
+  text-align:center;
+  border-radius:6px;
+  margin-bottom:15px;
+}
+
+@media(max-width:1100px){
+
+  .grid,
+  .form-grid,
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:650px){
+
+  header h1{
+    font-size:20px;
+  }
+
+  .container{
+    padding:10px;
+  }
+
+  .grid,
+  .form-grid,
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  nav button{
+    flex:1 1 45%;
+  }
+
+  .card{
+    padding:14px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage">
+
+  <div class="card login-box">
+
+    <h2>Banga Fashion Limited</h2>
+
+    <p class="muted" style="text-align:center">
+      Employee & Factory Management System
+    </p>
+
+    <div class="field">
+      <label>Email</label>
+      <input id="loginEmail" type="email" placeholder="Enter email">
+    </div>
+
+    <br>
+
+    <div class="field">
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="Enter password">
+    </div>
+
+    <br>
+
+    <button class="btn" style="width:100%" onclick="login()">
+      Login
+    </button>
+
+    <div id="loginMessage" class="error"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app" class="hidden">
+
+<header>
+
+  <h1>Banga Fashion Limited</h1>
+
+  <p>
+    Plot # 1595, Gacha, Gazipur Sadar, Gazipur.
+  </p>
+
+</header>
+
+
+<nav>
+
+  <button onclick="showPage('dashboard')" id="navDashboard">
+    Dashboard
+  </button>
+
+  <button onclick="showPage('employees')" id="navEmployees">
+    Employees
+  </button>
+
+  <button onclick="showPage('production')" id="navProduction">
+    Production
+  </button>
+
+  <button onclick="showPage('attendance')" id="navAttendance">
+    Attendance
+  </button>
+
+  <button onclick="showPage('lines')" id="navLines">
+    Lines
+  </button>
+
+  <button onclick="showPage('reports')" id="navReports">
+    Reports
+  </button>
+
+  <button onclick="logout()" style="margin-left:auto">
+    Logout
+  </button>
+
+</nav>
+
+
+<div class="container">
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section id="dashboard" class="page">
+
+  <div class="card company-title">
+
+    <h2>Banga Fashion Limited</h2>
+
+    <p>
+      Employee & Production Management Dashboard
+    </p>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+      <h3>Total Employees</h3>
+      <strong id="dashEmployees">0</strong>
+    </div>
+
+    <div class="stat">
+      <h3>Active Employees</h3>
+      <strong id="dashActiveEmployees">0</strong>
+    </div>
+
+    <div class="stat">
+      <h3>Total Lines</h3>
+      <strong id="dashLines">0</strong>
+    </div>
+
+    <div class="stat">
+      <h3>Today's Production</h3>
+      <strong id="dashProduction">0</strong>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Today's Production Summary</h2>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Line</th>
+            <th>Target</th>
+            <th>Actual</th>
+            <th>Achievement</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="dashboardProductionBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= EMPLOYEES ================= -->
+
+<section id="employees" class="page hidden">
+
+  <div class="card">
+
+    <div class="profile-title">
+      Employee Profile
+    </div>
+
+    <form id="employeeForm">
+
+      <input type="hidden" id="employeeDbId">
+
+
+      <h3>Basic Information</h3>
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Employee ID *</label>
+          <input id="eEmployeeId" required placeholder="01231">
+        </div>
+
+        <div class="field">
+          <label>Employee Name *</label>
+          <input id="eEmployeeName" required placeholder="Md. Golap">
+        </div>
+
+        <div class="field">
+          <label>Working Place</label>
+          <input id="eWorkingPlace" placeholder="1st Floor-BF">
+        </div>
+
+        <div class="field">
+          <label>Join Date</label>
+          <input type="date" id="eJoinDate">
+        </div>
+
+        <div class="field">
+          <label>Date of Birth</label>
+          <input type="date" id="eDob">
+        </div>
+
+        <div class="field">
+          <label>Sex</label>
+
+          <select id="eSex">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+
+        </div>
+
+        <div class="field">
+          <label>Contact No.</label>
+          <input id="eContactNo" placeholder="01934904757">
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+
+          <select id="eStatus">
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <br>
+
+
+      <h3>Organization Information</h3>
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Department</label>
+          <input id="eDepartment" placeholder="Production">
+        </div>
+
+        <div class="field">
+          <label>Section</label>
+          <input id="eSection" placeholder="Jacquard-(China)">
+        </div>
+
+        <div class="field">
+          <label>Sub Section</label>
+          <input
+            id="eSubSection"
+            placeholder="Jacquard-Operating (China)"
+          >
+        </div>
+
+        <div class="field">
+          <label>Designation</label>
+          <input
+            id="eDesignation"
+            placeholder="Junior Operator"
+          >
+        </div>
+
+        <div class="field">
+          <label>Grade</label>
+          <input id="eGrade" placeholder="3">
+        </div>
+
+        <div class="field">
+          <label>Classification</label>
+
+          <select id="eClassification">
+
+            <option value="">Select</option>
+            <option>Worker</option>
+            <option>Staff</option>
+            <option>Officer</option>
+            <option>Management</option>
+            <option>Other</option>
+
+          </select>
+
+        </div>
+
+        <div class="field">
+          <label>Line / Block</label>
+          <input
+            id="eLineBlock"
+            placeholder="Jacquard Shift-B"
+          >
+        </div>
+
+        <div class="field">
+          <label>Shift</label>
+
+          <select id="eShift">
+
+            <option value="">Select</option>
+            <option>Day</option>
+            <option>Night</option>
+            <option>General</option>
+            <option>Morning</option>
+            <option>Evening</option>
+
+          </select>
+
+        </div>
+
+        <div class="field">
+          <label>WeekEnd</label>
+
+          <select id="eWeekend">
+
+            <option value="">Select</option>
+            <option>Friday</option>
+            <option>Saturday</option>
+            <option>Sunday</option>
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+
+          </select>
+
+        </div>
+
+        <div class="field">
+          <label>Gross Salary</label>
+          <input
+            type="number"
+            id="eGrossSalary"
+            placeholder="19400"
+            min="0"
+          >
+        </div>
+
+      </div>
+
+
+      <div class="form-actions">
+
+        <button type="submit" class="btn">
+          Save Employee
+        </button>
+
+        <button
+          type="button"
+          class="btn secondary"
+          onclick="resetEmployeeForm()"
+        >
+          Clear
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="toolbar">
+
+      <input
+        id="employeeSearch"
+        placeholder="Search Employee ID / Name / Designation..."
+        oninput="renderEmployees()"
+      >
+
+      <button
+        class="btn success"
+        onclick="exportEmployees()"
+      >
+        Export Employees CSV
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>S.L</th>
+            <th>Working Place</th>
+            <th>Emp. ID</th>
+            <th>Name</th>
+            <th>Join Date</th>
+            <th>Job Age</th>
+            <th>DOB</th>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>Department</th>
+            <th>Section</th>
+            <th>Sub Section</th>
+            <th>Designation</th>
+            <th>Contact No.</th>
+            <th>Grade</th>
+            <th>Classification</th>
+            <th>Line/Block</th>
+            <th>Shift</th>
+            <th>WeekEnd</th>
+            <th>Gross Salary</th>
+            <th>Status</th>
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="employeeBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= PRODUCTION ================= -->
+
+<section id="production" class="page hidden">
+
+  <div class="card">
+
+    <h2>Production Entry</h2>
+
+    <form id="productionForm">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="pDate" required>
+        </div>
+
+        <div class="field">
+          <label>Line</label>
+          <select id="pLine" required></select>
+        </div>
+
+        <div class="field">
+          <label>Buyer</label>
+          <input id="pBuyer">
+        </div>
+
+        <div class="field">
+          <label>Style</label>
+          <input id="pStyle">
+        </div>
+
+        <div class="field">
+          <label>Target</label>
+          <input type="number" id="pTarget" min="0" value="0">
+        </div>
+
+        <div class="field">
+          <label>Actual</label>
+          <input type="number" id="pActual" min="0" value="0">
+        </div>
+
+        <div class="field">
+          <label>Working Hours</label>
+          <input type="number" id="pHours" min="0" step="0.5" value="0">
+        </div>
+
+        <div class="field">
+          <label>Remarks</label>
+          <input id="pRemarks">
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <button class="btn">
+          Save Production
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Recent Production</h2>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Date</th>
+            <th>Line</th>
+            <th>Buyer</th>
+            <th>Style</th>
+            <th>Target</th>
+            <th>Actual</th>
+            <th>Achievement</th>
+            <th>Hours</th>
+            <th>Remarks</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="productionBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= ATTENDANCE ================= -->
+
+<section id="attendance" class="page hidden">
+
+  <div class="card">
+
+    <h2>Attendance Entry</h2>
+
+    <form id="attendanceForm">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="aDate" required>
+        </div>
+
+        <div class="field">
+          <label>Employee</label>
+
+          <select id="aEmployee" required onchange="fillAttendanceEmployee()">
+          </select>
+
+        </div>
+
+        <div class="field">
+          <label>Employee ID</label>
+          <input id="aEmployeeId" readonly>
+        </div>
+
+        <div class="field">
+          <label>Employee Name</label>
+          <input id="aEmployeeName" readonly>
+        </div>
+
+        <div class="field">
+          <label>Line / Block</label>
+          <input id="aLineName" readonly>
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+
+          <select id="aStatus">
+
+            <option>Present</option>
+            <option>Absent</option>
+            <option>Leave</option>
+            <option>Late</option>
+            <option>Holiday</option>
+
+          </select>
+
+        </div>
+
+        <div class="field">
+          <label>In Time</label>
+          <input type="time" id="aInTime">
+        </div>
+
+        <div class="field">
+          <label>Out Time</label>
+          <input type="time" id="aOutTime">
+        </div>
+
+        <div class="field">
+          <label>Overtime Hours</label>
+          <input
+            type="number"
+            id="aOvertime"
+            step="0.5"
+            min="0"
+            value="0"
+          >
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <button class="btn">
+          Save Attendance
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Recent Attendance</h2>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Date</th>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Line</th>
+            <th>Status</th>
+            <th>In</th>
+            <th>Out</th>
+            <th>OT</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="attendanceBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= LINES ================= -->
+
+<section id="lines" class="page hidden">
+
+  <div class="card">
+
+    <h2>Line Management</h2>
+
+    <form id="lineForm">
+
+      <input type="hidden" id="lineDbId">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Line Name</label>
+          <input id="lineName" required placeholder="Line 01">
+        </div>
+
+        <div class="field">
+          <label>Supervisor</label>
+          <input id="lineSupervisor">
+        </div>
+
+        <div class="field">
+          <label>Capacity</label>
+          <input type="number" id="lineCapacity" min="0">
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+
+          <select id="lineActive">
+
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <button class="btn">
+          Save Line
+        </button>
+
+        <button
+          type="button"
+          class="btn secondary"
+          onclick="resetLineForm()"
+        >
+          Clear
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>S.L</th>
+            <th>Line Name</th>
+            <th>Supervisor</th>
+            <th>Capacity</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="lineBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= REPORTS ================= -->
+
+<section id="reports" class="page hidden">
+
+  <div class="card">
+
+    <h2>Production Report</h2>
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>From Date</label>
+        <input type="date" id="reportFrom">
+      </div>
+
+      <div class="field">
+        <label>To Date</label>
+        <input type="date" id="reportTo">
+      </div>
+
+      <div class="field">
+
+        <label>&nbsp;</label>
+
+        <button class="btn" onclick="loadReport()">
+          Search Report
+        </button>
+
+      </div>
+
+      <div class="field">
+
+        <label>&nbsp;</label>
+
+        <button class="btn success" onclick="exportReport()">
+          Export CSV
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Date</th>
+            <th>Line</th>
+            <th>Buyer</th>
+            <th>Style</th>
+            <th>Target</th>
+            <th>Actual</th>
+            <th>Achievement</th>
+            <th>Hours</th>
+            <th>Remarks</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="reportBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONNECTION
+   ===================================================== */
+
+const SUPABASE_URL =
+  "https://xlokguwoxrygimhwjihi.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_qWT6qCgznOPevXhNU_GCWQ_MDDvh3C8";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =====================================================
+   GLOBAL DATA
+   ===================================================== */
+
+let employees = [];
+let lines = [];
+let productions = [];
+let attendances = [];
+let reportData = [];
+
+
+/* =====================================================
+   HELPERS
+   ===================================================== */
+
+function esc(value){
+
+  if(value === null || value === undefined)
+    return "";
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function today(){
+
+  const d = new Date();
+
+  return d.toISOString().slice(0,10);
+}
+
+
+function formatDate(value){
+
+  if(!value) return "-";
+
+  const d = new Date(value);
+
+  if(isNaN(d)) return "-";
+
+  return d.toLocaleDateString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
+}
+
+
+function calculateAge(dateValue){
+
+  if(!dateValue) return "-";
+
+  const birth = new Date(dateValue);
+  const now = new Date();
+
+  if(isNaN(birth)) return "-";
+
+  let years =
+    now.getFullYear() -
+    birth.getFullYear();
+
+  let months =
+    now.getMonth() -
+    birth.getMonth();
+
+  let days =
+    now.getDate() -
+    birth.getDate();
+
+
+  if(days < 0){
+
+    months--;
+
+    const previous =
+      new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        0
+      );
+
+    days += previous.getDate();
+  }
+
+
+  if(months < 0){
+
+    years--;
+    months += 12;
+  }
+
+
+  return `${years} Y ${months} M ${days} D`;
+}
+
+
+function calculateJobAge(dateValue){
+
+  return calculateAge(dateValue);
+}
+
+
+function achievement(target,actual){
+
+  if(!target || Number(target) === 0)
+    return "0%";
+
+  return (
+    (Number(actual) /
+    Number(target) *
+    100)
+    .toFixed(1)
+    + "%"
+  );
+}
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+async function login(){
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+
+  const message =
+    document.getElementById("loginMessage");
+
+  message.textContent = "";
+
+
+  if(!email || !password){
+
+    message.textContent =
+      "Email এবং password দিন।";
+
+    return;
+  }
+
+
+  const {error} =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+
+  if(error){
+
+    message.textContent =
+      error.message;
+
+    return;
+  }
+
+
+  showApp();
+}
+
+
+async function logout(){
+
+  await supabaseClient.auth.signOut();
+
+  location.reload();
+}
+
+
+async function checkLogin(){
+
+  const {data} =
+    await supabaseClient.auth.getSession();
+
+
+  if(data.session){
+
+    showApp();
+
+  }else{
+
+    document
+      .getElementById("loginPage")
+      .classList.remove("hidden");
+
+    document
+      .getElementById("app")
+      .classList.add("hidden");
+  }
+}
+
+
+async function showApp(){
+
+  document
+    .getElementById("loginPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("app")
+    .classList.remove("hidden");
+
+
+  document.getElementById("pDate").value =
+    today();
+
+  document.getElementById("aDate").value =
+    today();
+
+
+  await loadAll();
+
+  showPage("dashboard");
+}
+
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(p =>
+      p.classList.add("hidden")
+    );
+
+
+  const section =
+    document.getElementById(page);
+
+  if(section)
+    section.classList.remove("hidden");
+
+
+  document
+    .querySelectorAll("nav button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
+
+
+  const nav =
+    document.getElementById(
+      "nav" +
+      page.charAt(0).toUpperCase() +
+      page.slice(1)
+    );
+
+  if(nav)
+    nav.classList.add("active");
+
+
+  if(page === "dashboard")
+    loadDashboard();
+
+  if(page === "employees")
+    renderEmployees();
+
+  if(page === "attendance")
+    renderAttendance();
+
+  if(page === "production")
+    renderProduction();
+
+  if(page === "lines")
+    renderLines();
+
+}
+
+
+/* =====================================================
+   LOAD ALL DATA
+   ===================================================== */
+
+async function loadAll(){
+
+  await Promise.all([
+    loadEmployees(),
+    loadLines(),
+    loadProduction(),
+    loadAttendance()
+  ]);
+
+  updateDashboard();
+}
+
+
+/* =====================================================
+   EMPLOYEES
+   ===================================================== */
+
+async function loadEmployees(){
+
+  const {data,error} =
+    await supabaseClient
+      .from("employees")
+      .select("*")
+      .order("employee_id",{ascending:true});
+
+
+  if(error){
+
+    console.error(error);
+
+    alert(
+      "Employee load error: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  employees = data || [];
+
+  renderEmployees();
+
+  fillAttendanceEmployees();
+
+  updateDashboard();
+}
+
+
+function renderEmployees(){
+
+  const body =
+    document.getElementById("employeeBody");
+
+  if(!body) return;
+
+
+  const search =
+    (
+      document.getElementById(
+        "employeeSearch"
+      )?.value || ""
+    )
+    .toLowerCase()
+    .trim();
+
+
+  const filtered =
+    employees.filter(e => {
+
+      const text = [
+
+        e.employee_id,
+        e.employee_name,
+        e.department,
+        e.section,
+        e.sub_section,
+        e.designation,
+        e.contact_no,
+        e.line_block,
+        e.shift,
+        e.classification
+
+      ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+
+      return text.includes(search);
+
+    });
+
+
+  if(!filtered.length){
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="22" style="text-align:center">
+          No employee found
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  body.innerHTML =
+    filtered.map((e,i)=>`
+
+      <tr>
+
+        <td>${i+1}</td>
+
+        <td>${esc(e.working_place || "-")}</td>
+
+        <td><strong>${esc(e.employee_id || "-")}</strong></td>
+
+        <td>${esc(e.employee_name || "-")}</td>
+
+        <td>${formatDate(e.join_date)}</td>
+
+        <td>${calculateJobAge(e.join_date)}</td>
+
+        <td>${formatDate(e.dob)}</td>
+
+        <td>${calculateAge(e.dob)}</td>
+
+        <td>${esc(e.sex || "-")}</td>
+
+        <td>${esc(e.department || "-")}</td>
+
+        <td>${esc(e.section || "-")}</td>
+
+        <td>${esc(e.sub_section || "-")}</td>
+
+        <td>
+          <strong>${esc(e.designation || "-")}</strong>
+        </td>
+
+        <td>${esc(e.contact_no || "-")}</td>
+
+        <td>${esc(e.grade || "-")}</td>
+
+        <td>${esc(e.classification || "-")}</td>
+
+        <td>${esc(e.line_block || "-")}</td>
+
+        <td>${esc(e.shift || "-")}</td>
+
+        <td>${esc(e.weekend || "-")}</td>
+
+        <td>
+          ${Number(e.gross_salary || 0).toLocaleString()}
+        </td>
+
+        <td>
+          ${
+            e.active
+            ?
+            '<span class="badge">Active</span>'
+            :
+            '<span class="badge off">Inactive</span>'
+          }
+        </td>
+
+        <td>
+
+          <button
+            class="btn small"
+            onclick="editEmployee(${e.id})"
+          >
+            Edit
+          </button>
+
+          <button
+            class="btn small danger"
+            onclick="deleteEmployee(${e.id})"
+          >
+            Delete
+          </button>
+
+        </td>
+
+      </tr>
+
+    `).join("");
+}
+
+
+/* SAVE EMPLOYEE */
+
+document
+.getElementById("employeeForm")
+.addEventListener("submit",async function(e){
+
+  e.preventDefault();
+
+
+  const dbId =
+    document.getElementById(
+      "employeeDbId"
+    ).value;
+
+
+  const employeeId =
+    document.getElementById(
+      "eEmployeeId"
+    ).value.trim();
+
+
+  const employeeName =
+    document.getElementById(
+      "eEmployeeName"
+    ).value.trim();
+
+
+  if(!employeeId || !employeeName){
+
+    alert(
+      "Employee ID এবং Name অবশ্যই দিতে হবে।"
+    );
+
+    return;
+  }
+
+
+  const record = {
+
+    employee_id:employeeId,
+
+    employee_name:employeeName,
+
+    working_place:
+      document.getElementById(
+        "eWorkingPlace"
+      ).value.trim() || null,
+
+    join_date:
+      document.getElementById(
+        "eJoinDate"
+      ).value || null,
+
+    dob:
+      document.getElementById(
+        "eDob"
+      ).value || null,
+
+    sex:
+      document.getElementById(
+        "eSex"
+      ).value || null,
+
+    department:
+      document.getElementById(
+        "eDepartment"
+      ).value.trim() || null,
+
+    section:
+      document.getElementById(
+        "eSection"
+      ).value.trim() || null,
+
+    sub_section:
+      document.getElementById(
+        "eSubSection"
+      ).value.trim() || null,
+
+    designation:
+      document.getElementById(
+        "eDesignation"
+      ).value.trim() || null,
+
+    contact_no:
+      document.getElementById(
+        "eContactNo"
+      ).value.trim() || null,
+
+    grade:
+      document.getElementById(
+        "eGrade"
+      ).value.trim() || null,
+
+    classification:
+      document.getElementById(
+        "eClassification"
+      ).value || null,
+
+    line_block:
+      document.getElementById(
+        "eLineBlock"
+      ).value.trim() || null,
+
+    shift:
+      document.getElementById(
+        "eShift"
+      ).value || null,
+
+    weekend:
+      document.getElementById(
+        "eWeekend"
+      ).value || null,
+
+    gross_salary:
+      Number(
+        document.getElementById(
+          "eGrossSalary"
+        ).value || 0
+      ),
+
+    active:
+      document.getElementById(
+        "eStatus"
+      ).value === "true"
+
+  };
+
+
+  let result;
+
+
+  if(dbId){
+
+    result =
+      await supabaseClient
+      .from("employees")
+      .update(record)
+      .eq("id",dbId);
+
+  }else{
+
+    result =
+      await supabaseClient
+      .from("employees")
+      .insert([record]);
+
+  }
+
+
+  if(result.error){
+
+    alert(
+      "Employee save error: " +
+      result.error.message
+    );
+
+    return;
+  }
+
+
+  alert(
+    dbId
+    ?
+    "Employee updated successfully."
+    :
+    "Employee added successfully."
+  );
+
+
+  resetEmployeeForm();
+
+  await loadEmployees();
+
+});
+
+
+/* EDIT EMPLOYEE */
+
+function editEmployee(id){
+
+  const e =
+    employees.find(x => x.id === id);
+
+  if(!e) return;
+
+
+  document.getElementById(
+    "employeeDbId"
+  ).value = e.id || "";
+
+
+  const fields = {
+
+    eEmployeeId:e.employee_id,
+
+    eEmployeeName:e.employee_name,
+
+    eWorkingPlace:e.working_place,
+
+    eJoinDate:e.join_date,
+
+    eDob:e.dob,
+
+    eSex:e.sex,
+
+    eContactNo:e.contact_no,
+
+    eDepartment:e.department,
+
+    eSection:e.section,
+
+    eSubSection:e.sub_section,
+
+    eDesignation:e.designation,
+
+    eGrade:e.grade,
+
+    eClassification:e.classification,
+
+    eLineBlock:e.line_block,
+
+    eShift:e.shift,
+
+    eWeekend:e.weekend,
+
+    eGrossSalary:e.gross_salary
+
+  };
+
+
+  Object.entries(fields)
+    .forEach(([id,value])=>{
+
+      const el =
+        document.getElementById(id);
+
+      if(el)
+        el.value = value || "";
+
+    });
+
+
+  document.getElementById(
+    "eStatus"
+  ).value =
+    e.active ? "true" : "false";
+
+
+  showPage("employees");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* DELETE */
+
+async function deleteEmployee(id){
+
+  const e =
+    employees.find(x => x.id === id);
+
+  if(!e) return;
+
+
+  if(!confirm(
+    `Delete ${e.employee_name} (${e.employee_id})?`
+  ))
+    return;
+
+
+  const {error} =
+    await supabaseClient
+      .from("employees")
+      .delete()
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "Delete error: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  await loadEmployees();
+
+  alert("Employee deleted successfully.");
+
+}
+
+
+/* RESET */
+
+function resetEmployeeForm(){
+
+  document
+    .getElementById("employeeForm")
+    .reset();
+
+  document
+    .getElementById("employeeDbId")
+    .value = "";
+
+  document
+    .getElementById("eStatus")
+    .value = "true";
+}
+
+
+/* EXPORT EMPLOYEES */
+
+function exportEmployees(){
+
+  if(!employees.length){
+
+    alert("No employee data.");
+
+    return;
+  }
+
+
+  const headers = [
+
+    "S.L",
+    "Working Place",
+    "Emp. ID",
+    "Name",
+    "Join Date",
+    "Job Age",
+    "DOB",
+    "Age",
+    "Sex",
+    "Department",
+    "Section",
+    "Sub Section",
+    "Designation",
+    "Contact No.",
+    "Grade",
+    "Classification",
+    "Line/Block",
+    "Shift",
+    "WeekEnd",
+    "Gross Salary",
+    "Status"
+
+  ];
+
+
+  const rows =
+    employees.map((e,i)=>[
+
+      i+1,
+
+      e.working_place || "",
+
+      e.employee_id || "",
+
+      e.employee_name || "",
+
+      e.join_date || "",
+
+      calculateJobAge(e.join_date),
+
+      e.dob || "",
+
+      calculateAge(e.dob),
+
+      e.sex || "",
+
+      e.department || "",
+
+      e.section || "",
+
+      e.sub_section || "",
+
+      e.designation || "",
+
+      e.contact_no || "",
+
+      e.grade || "",
+
+      e.classification || "",
+
+      e.line_block || "",
+
+      e.shift || "",
+
+      e.weekend || "",
+
+      e.gross_salary || 0,
+
+      e.active ? "Active" : "Inactive"
+
+    ]);
+
+
+  downloadCSV(
+    "employee_profile.csv",
+    headers,
+    rows
+  );
+
+}
+
+
+/* =====================================================
+   LINES
+   ===================================================== */
+
+async function loadLines(){
+
+  const {data,error} =
+    await supabaseClient
+      .from("lines")
+      .select("*")
+      .order("line_name");
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+  }
+
+
+  lines = data || [];
+
+  renderLines();
+
+  fillLineDropdowns();
+
+  updateDashboard();
+}
+
+
+function renderLines(){
+
+  const body =
+    document.getElementById("lineBody");
+
+  if(!body) return;
+
+
+  body.innerHTML =
+    lines.map((l,i)=>`
+
+      <tr>
+
+        <td>${i+1}</td>
+
+        <td>${esc(l.line_name)}</td>
+
+        <td>${esc(l.supervisor || "-")}</td>
+
+        <td>${l.capacity || 0}</td>
+
+        <td>
+          ${
+            l.active
+            ?
+            '<span class="badge">Active</span>'
+            :
+            '<span class="badge off">Inactive</span>'
+          }
+        </td>
+
+        <td>
+
+          <button
+            class="btn small"
+            onclick="editLine(${l.id})"
+          >
+            Edit
+          </button>
+
+          <button
+            class="btn small danger"
+            onclick="deleteLine(${l.id})"
+          >
+            Delete
+          </button>
+
+        </td>
+
+      </tr>
+
+    `).join("");
+}
+
+
+function fillLineDropdowns(){
+
+  const pLine =
+    document.getElementById("pLine");
+
+  if(!pLine) return;
+
+
+  pLine.innerHTML =
+    '<option value="">Select Line</option>' +
+
+    lines
+    .filter(l=>l.active)
+    .map(l=>
+      `<option value="${l.id}">
+        ${esc(l.line_name)}
+      </option>`
+    )
+    .join("");
+}
+
+
+/* SAVE LINE */
+
+document
+.getElementById("lineForm")
+.addEventListener("submit",async function(e){
+
+  e.preventDefault();
+
+
+  const dbId =
+    document.getElementById(
+      "lineDbId"
+    ).value;
+
+
+  const record = {
+
+    line_name:
+      document.getElementById(
+        "lineName"
+      ).value.trim(),
+
+    supervisor:
+      document.getElementById(
+        "lineSupervisor"
+      ).value.trim() || null,
+
+    capacity:
+      Number(
+        document.getElementById(
+          "lineCapacity"
+        ).value || 0
+      ),
+
+    active:
+      document.getElementById(
+        "lineActive"
+      ).value === "true"
+
+  };
+
+
+  let result;
+
+
+  if(dbId){
+
+    result =
+      await supabaseClient
+      .from("lines")
+      .update(record)
+      .eq("id",dbId);
+
+  }else{
+
+    result =
+      await supabaseClient
+      .from("lines")
+      .insert([record]);
+
+  }
+
+
+  if(result.error){
+
+    alert(
+      "Line save error: " +
+      result.error.message
+    );
+
+    return;
+  }
+
+
+  resetLineForm();
+
+  await loadLines();
+
+  alert("Line saved successfully.");
+
+});
+
+
+function editLine(id){
+
+  const l =
+    lines.find(x=>x.id===id);
+
+  if(!l) return;
+
+
+  document.getElementById(
+    "lineDbId"
+  ).value = l.id;
+
+  document.getElementById(
+    "lineName"
+  ).value = l.line_name || "";
+
+  document.getElementById(
+    "lineSupervisor"
+  ).value = l.supervisor || "";
+
+  document.getElementById(
+    "lineCapacity"
+  ).value = l.capacity || 0;
+
+  document.getElementById(
+    "lineActive"
+  ).value =
+    l.active ? "true" : "false";
+
+
+  showPage("lines");
+
+}
+
+
+async function deleteLine(id){
+
+  if(!confirm("Delete this line?"))
+    return;
+
+
+  const {error} =
+    await supabaseClient
+      .from("lines")
+      .delete()
+      .eq("id",id);
+
+
+  if(error){
+
+    alert(
+      "Delete error: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  await loadLines();
+
+}
+
+
+function resetLineForm(){
+
+  document
+    .getElementById("lineForm")
+    .reset();
+
+  document
+    .getElementById("lineDbId")
+    .value = "";
+
+  document
+    .getElementById("lineActive")
+    .value = "true";
+
+}
+
+
+/* =====================================================
+   PRODUCTION
+   ===================================================== */
+
+async function loadProduction(){
+
+  const {data,error} =
+    await supabaseClient
+      .from("production")
+      .select(`
+        *,
+        lines(line_name)
+      `)
+      .order(
+        "production_date",
+        {ascending:false}
+      )
+      .limit(200);
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+  }
+
+
+  productions = data || [];
+
+  renderProduction();
+
+  updateDashboard();
+}
+
+
+function renderProduction(){
+
+  const body =
+    document.getElementById(
+      "productionBody"
+    );
+
+  if(!body) return;
+
+
+  body.innerHTML =
+    productions.map(p=>`
+
+      <tr>
+
+        <td>${formatDate(p.production_date)}</td>
+
+        <td>
+          ${esc(
+            p.lines?.line_name ||
+            getLineName(p.line_id)
+          )}
+        </td>
+
+        <td>${esc(p.buyer || "-")}</td>
+
+        <td>${esc(p.style || "-")}</td>
+
+        <td>${p.target || 0}</td>
+
+        <td>${p.actual || 0}</td>
+
+        <td>${achievement(p.target,p.actual)}</td>
+
+        <td>${p.working_hours || 0}</td>
+
+        <td>${esc(p.remarks || "-")}</td>
+
+      </tr>
+
+    `).join("");
+}
+
+
+function getLineName(id){
+
+  const l =
+    lines.find(x=>x.id===id);
+
+  return l ? l.line_name : "-";
+}
+
+
+/* SAVE PRODUCTION */
+
+document
+.getElementById("productionForm")
+.addEventListener("submit",async function(e){
+
+  e.preventDefault();
+
+
+  const record = {
+
+    production_date:
+      document.getElementById(
+        "pDate"
+      ).value,
+
+    line_id:
+      Number(
+        document.getElementById(
+          "pLine"
+        ).value
+      ) || null,
+
+    buyer:
+      document.getElementById(
+        "pBuyer"
+      ).value.trim() || null,
+
+    style:
+      document.getElementById(
+        "pStyle"
+      ).value.trim() || null,
+
+    target:
+      Number(
+        document.getElementById(
+          "pTarget"
+        ).value || 0
+      ),
+
+    actual:
+      Number(
+        document.getElementById(
+          "pActual"
+        ).value || 0
+      ),
+
+    working_hours:
+      Number(
+        document.getElementById(
+          "pHours"
+        ).value || 0
+      ),
+
+    remarks:
+      document.getElementById(
+        "pRemarks"
+      ).value.trim() || null
+
+  };
+
+
+  const {error} =
+    await supabaseClient
+      .from("production")
+      .insert([record]);
+
+
+  if(error){
+
+    alert(
+      "Production save error: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert("Production saved.");
+
+  document
+    .getElementById("productionForm")
+    .reset();
+
+  document.getElementById("pDate").value =
+    today();
+
+  await loadProduction();
+
+});
+
+
+/* =====================================================
+   ATTENDANCE
+   ===================================================== */
+
+async function loadAttendance(){
+
+  const {data,error} =
+    await supabaseClient
+      .from("attendance")
+      .select("*")
+      .order(
+        "attendance_date",
+        {ascending:false}
+      )
+      .limit(200);
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+  }
+
+
+  attendances = data || [];
+
+  renderAttendance();
+
+  fillAttendanceEmployees();
+}
+
+
+function renderAttendance(){
+
+  const body =
+    document.getElementById(
+      "attendanceBody"
+    );
+
+  if(!body) return;
+
+
+  body.innerHTML =
+    attendances.map(a=>`
+
+      <tr>
+
+        <td>${formatDate(a.attendance_date)}</td>
+
+        <td>${esc(a.employee_id_text || "-")}</td>
+
+        <td>${esc(a.employee_name || "-")}</td>
+
+        <td>${esc(a.line_name || "-")}</td>
+
+        <td>${esc(a.status || "-")}</td>
+
+        <td>${a.in_time || "-"}</td>
+
+        <td>${a.out_time || "-"}</td>
+
+        <td>${a.overtime || 0}</td>
+
+      </tr>
+
+    `).join("");
+}
+
+
+function fillAttendanceEmployees(){
+
+  const select =
+    document.getElementById(
+      "aEmployee"
+    );
+
+  if(!select) return;
+
+
+  select.innerHTML =
+    '<option value="">Select Employee</option>' +
+
+    employees
+    .filter(e=>e.active)
+    .map(e=>
+      `<option value="${e.id}">
+        ${esc(e.employee_id)} -
+        ${esc(e.employee_name)}
+      </option>`
+    )
+    .join("");
+}
+
+
+function fillAttendanceEmployee(){
+
+  const id =
+    Number(
+      document.getElementById(
+        "aEmployee"
+      ).value
+    );
+
+
+  const e =
+    employees.find(x=>x.id===id);
+
+
+  document.getElementById(
+    "aEmployeeId"
+  ).value =
+    e?.employee_id || "";
+
+
+  document.getElementById(
+    "aEmployeeName"
+  ).value =
+    e?.employee_name || "";
+
+
+  document.getElementById(
+    "aLineName"
+  ).value =
+    e?.line_block || "";
+}
+
+
+/* SAVE ATTENDANCE */
+
+document
+.getElementById("attendanceForm")
+.addEventListener("submit",async function(e){
+
+  e.preventDefault();
+
+
+  const id =
+    Number(
+      document.getElementById(
+        "aEmployee"
+      ).value
+    );
+
+
+  const employee =
+    employees.find(x=>x.id===id);
+
+
+  if(!employee){
+
+    alert("Employee select করুন।");
+
+    return;
+  }
+
+
+  const record = {
+
+    attendance_date:
+      document.getElementById(
+        "aDate"
+      ).value,
+
+    employee_id:
+      null,
+
+    employee_id_text:
+      employee.employee_id,
+
+    employee_name:
+      employee.employee_name,
+
+    line_name:
+      employee.line_block || null,
+
+    status:
+      document.getElementById(
+        "aStatus"
+      ).value,
+
+    in_time:
+      document.getElementById(
+        "aInTime"
+      ).value || null,
+
+    out_time:
+      document.getElementById(
+        "aOutTime"
+      ).value || null,
+
+    overtime:
+      Number(
+        document.getElementById(
+          "aOvertime"
+        ).value || 0
+      )
+
+  };
+
+
+  const {error} =
+    await supabaseClient
+      .from("attendance")
+      .insert([record]);
+
+
+  if(error){
+
+    alert(
+      "Attendance save error: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  alert("Attendance saved.");
+
+
+  document
+    .getElementById("attendanceForm")
+    .reset();
+
+  document.getElementById("aDate").value =
+    today();
+
+  await loadAttendance();
+
+});
+
+
+/* =====================================================
+   DASHBOARD
+   ===================================================== */
+
+function updateDashboard(){
+
+  const total =
+    employees.length;
+
+  const active =
+    employees.filter(e=>e.active).length;
+
+  const totalLines =
+    lines.filter(l=>l.active).length;
+
+
+  document.getElementById(
+    "dashEmployees"
+  ).textContent = total;
+
+
+  document.getElementById(
+    "dashActiveEmployees"
+  ).textContent = active;
+
+
+  document.getElementById(
+    "dashLines"
+  ).textContent = totalLines;
+
+
+  const todayProduction =
+    productions
+      .filter(p=>
+        p.production_date === today()
+      )
+      .reduce(
+        (sum,p)=>
+          sum + Number(p.actual || 0),
+        0
+      );
+
+
+  document.getElementById(
+    "dashProduction"
+  ).textContent =
+    todayProduction;
+
+
+  const body =
+    document.getElementById(
+      "dashboardProductionBody"
+    );
+
+  if(!body) return;
+
+
+  const rows =
+    productions.filter(
+      p=>p.production_date===today()
+    );
+
+
+  body.innerHTML =
+    rows.map(p=>`
+
+      <tr>
+
+        <td>
+          ${esc(
+            p.lines?.line_name ||
+            getLineName(p.line_id)
+          )}
+        </td>
+
+        <td>${p.target || 0}</td>
+
+        <td>${p.actual || 0}</td>
+
+        <td>
+          ${achievement(p.target,p.actual)}
+        </td>
+
+      </tr>
+
+    `).join("");
+
+
+  if(!rows.length){
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align:center">
+          No production today
+        </td>
+      </tr>
+    `;
+  }
+
+}
+
+
+function loadDashboard(){
+
+  updateDashboard();
+
+}
+
+
+/* =====================================================
+   REPORT
+   ===================================================== */
+
+async function loadReport(){
+
+  const from =
+    document.getElementById(
+      "reportFrom"
+    ).value;
+
+
+  const to =
+    document.getElementById(
+      "reportTo"
+    ).value;
+
+
+  let query =
+    supabaseClient
+      .from("production")
+      .select(`
+        *,
+        lines(line_name)
+      `)
+      .order(
+        "production_date",
+        {ascending:true}
+      );
+
+
+  if(from)
+    query =
+      query.gte(
+        "production_date",
+        from
+      );
+
+
+  if(to)
+    query =
+      query.lte(
+        "production_date",
+        to
+      );
+
+
+  const {data,error} =
+    await query;
+
+
+  if(error){
+
+    alert(
+      "Report error: " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  reportData = data || [];
+
+
+  renderReport();
+}
+
+
+function renderReport(){
+
+  const body =
+    document.getElementById(
+      "reportBody"
+    );
+
+
+  body.innerHTML =
+    reportData.map(p=>`
+
+      <tr>
+
+        <td>${formatDate(p.production_date)}</td>
+
+        <td>
+          ${esc(
+            p.lines?.line_name ||
+            getLineName(p.line_id)
+          )}
+        </td>
+
+        <td>${esc(p.buyer || "-")}</td>
+
+        <td>${esc(p.style || "-")}</td>
+
+        <td>${p.target || 0}</td>
+
+        <td>${p.actual || 0}</td>
+
+        <td>${achievement(p.target,p.actual)}</td>
+
+        <td>${p.working_hours || 0}</td>
+
+        <td>${esc(p.remarks || "-")}</td>
+
+      </tr>
+
+    `).join("");
+
+
+  if(!reportData.length){
+
+    body.innerHTML = `
+      <tr>
+        <td colspan="9" style="text-align:center">
+          No data found
+        </td>
+      </tr>
+    `;
+  }
+
+}
+
+
+function exportReport(){
+
+  if(!reportData.length){
+
+    alert(
+      "আগে Search Report করুন।"
+    );
+
+    return;
+  }
+
+
+  const headers = [
+
+    "Date",
+    "Line",
+    "Buyer",
+    "Style",
+    "Target",
+    "Actual",
+    "Achievement",
+    "Working Hours",
+    "Remarks"
+
+  ];
+
+
+  const rows =
+    reportData.map(p=>[
+
+      p.production_date,
+
+      p.lines?.line_name ||
+      getLineName(p.line_id),
+
+      p.buyer || "",
+
+      p.style || "",
+
+      p.target || 0,
+
+      p.actual || 0,
+
+      achievement(
+        p.target,
+        p.actual
+      ),
+
+      p.working_hours || 0,
+
+      p.remarks || ""
+
+    ]);
+
+
+  downloadCSV(
+    "production_report.csv",
+    headers,
+    rows
+  );
+
+}
+
+
+/* =====================================================
+   CSV
+   ===================================================== */
+
+function downloadCSV(filename,headers,rows){
+
+  const csv = [
+
+    headers,
+
+    ...rows
+
+  ]
+  .map(row =>
+    row.map(value => {
+
+      const text =
+        String(
+          value ?? ""
+        );
+
+      return `"${text.replace(
+        /"/g,
+        '""'
+      )}"`;
+
+    }).join(",")
+
+  ).join("\n");
+
+
+  const blob =
+    new Blob(
+      ["\ufeff" + csv],
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href = url;
+
+  a.download = filename;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  a.remove();
+
+  URL.revokeObjectURL(url);
+}
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+checkLogin();
+
+
+</script>
+
+</body>
+</html>
